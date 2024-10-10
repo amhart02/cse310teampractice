@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,18 +10,21 @@
             height: 400px;
             width: 100%;
         }
+
         #restaurants {
             margin-top: 20px;
         }
+
         .restaurant-item {
             margin-bottom: 10px;
         }
     </style>
 </head>
+
 <body>
 
     <h1>Restaurants in Rexburg, Idaho</h1>
-    
+
     <!-- Map to show the location of restaurants -->
     <div id="map"></div>
 
@@ -31,7 +35,7 @@
     <script async
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDSpjOGv1rYMieaM2Uj0AzPT0zv08TyGZk&callback=initMap&libraries=places"
         defer>
-    </script>
+        </script>
 
     <script>
         // Replace this with your actual API key
@@ -131,16 +135,21 @@
             allRestaurants.forEach((place) => {
                 const restaurantItem = document.createElement('div');
                 restaurantItem.classList.add('restaurant-item');
+                let photoUrl = '';
+                if (place.photos && place.photos.length > 0) {
+                    photoUrl = place.photos[0].getUrl({ maxWidth: 100, maxHeight: 100 }); // Get the URL of the first photo
+                }
                 restaurantItem.innerHTML = `
-                    <strong>${place.name}</strong><br>
-                    Rating: ${place.rating ? place.rating : 'No rating available'}<br>
-                    Address: ${place.vicinity}
-                    Image: ${place.icon}
-                `;
+            <strong>${place.name}</strong><br>
+            Rating: ${place.rating ? place.rating : 'No rating available'}<br>
+            Address: ${place.vicinity}<br>
+            <img src="${photoUrl}" alt="Restaurant photo">
+        `;
                 restaurantsDiv.appendChild(restaurantItem);
             });
         }
     </script>
 
 </body>
+
 </html>
